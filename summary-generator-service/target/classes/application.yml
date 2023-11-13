@@ -1,12 +1,10 @@
-#spring:
-#  data:
-#    mongodb:
-#      host: localhost
-#      port: 27017
-#      database: vectors
-
 server:
   port: 17009
+  data:
+    mongodb:
+      database: discussions
+      host: localhost
+      port: 27017
 
 logging:
   pattern:
