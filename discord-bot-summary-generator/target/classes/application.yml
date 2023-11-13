@@ -1,5 +1,0 @@
-server:
-  port: 17000
-
-server-config:
-  recorderUri: http://localhost:17008/record/channel/{channel}

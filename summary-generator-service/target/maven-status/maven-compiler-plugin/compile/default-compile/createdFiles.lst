@@ -1,5 +1,0 @@
-com\memoritta\summarizer\summary\generator\controller\CreateSummaryController.class
-com\memoritta\summarizer\summary\generator\client\SummaryGenerator.class
-com\memoritta\summarizer\summary\generator\db\DiscussionsRepository.class
-com\memoritta\summarizer\summary\generator\Application.class
-com\memoritta\summarizer\summary\generator\config\Config.class
