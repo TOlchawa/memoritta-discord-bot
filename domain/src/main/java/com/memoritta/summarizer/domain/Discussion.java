@@ -5,8 +5,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDateTime;
+
 @Data
-@Document(collection = "discussion")
+@Document(collection = "discussions")
 public class Discussion {
     @Id
     private String id;
@@ -21,7 +23,7 @@ public class Discussion {
     private String channel;
 
     @Field("datetime")
-    private String datetime;
+    private LocalDateTime datetime;
 
     @Data
     public static class User {

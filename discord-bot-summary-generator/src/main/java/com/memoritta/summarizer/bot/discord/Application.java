@@ -1,4 +1,4 @@
-package com.memoritta.summarizer.bot;
+package com.memoritta.summarizer.bot.discord;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

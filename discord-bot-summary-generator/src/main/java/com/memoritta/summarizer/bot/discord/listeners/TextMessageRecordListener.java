@@ -9,6 +9,10 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
+import static java.time.ZoneOffset.UTC;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -34,6 +38,8 @@ public class TextMessageRecordListener extends ListenerAdapter {
         author.setId(userId);
         author.setName(userName);
         discussion.setAuthor(author);
+        discussion.setText(message);
+        discussion.setDatetime(Instant.now().atZone(UTC).toLocalDateTime());
 
         textMessageRecorderClient.record(discussion);
 

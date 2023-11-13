@@ -6,9 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties("config")
 @Getter
 @Setter
-public class Config {
+@ConfigurationProperties(prefix = "discord-config")
+public class DiscordConfig {
     String discordKey;
 }

@@ -1,6 +1,6 @@
 package com.memoritta.summarizer.bot.discord.controller;
 
-import com.memoritta.summarizer.bot.discord.config.Config;
+import com.memoritta.summarizer.bot.discord.config.DiscordConfig;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class DiscordBotController extends ListenerAdapter {
 
-    private DiscordBotController(Config config, EventListener[] listeners) {
+    private DiscordBotController(DiscordConfig discordConfig, EventListener[] listeners) {
         try {
-            log.info("token: {}...", config.getDiscordKey().substring(0,16));
-            JDA jda = JDABuilder.createDefault(config.getDiscordKey())
+            log.info("token: {}...", discordConfig.getDiscordKey().substring(0, 16));
+            JDA jda = JDABuilder.createDefault(discordConfig.getDiscordKey())
                     .addEventListeners(this)
                     .setActivity(Activity.listening("memory"))
                     .setStatus(OnlineStatus.ONLINE)
