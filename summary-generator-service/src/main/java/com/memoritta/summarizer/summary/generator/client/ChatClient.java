@@ -29,7 +29,7 @@ public class ChatClient {
         Instant startT = Instant.now();
         AiMessage answer = chatLanguageModel.sendMessages(conversation);
         log.info("Response generated in {}", Duration.between(startT, Instant.now()).toSeconds());
-        return answer.toString();
+        return answer.text();
     }
 
     private List<ChatMessage> prepareMessages(List<Discussion> contextVectors, String question) {
