@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CommandsUtils {
 
-    public static final String SUMMARY_FOR_CHANNEL_COMMAND_PREFIX = "!sc:";
+    public static final String SUMMARY_COMMAND_PREFIX = "!sc";
+    public static final String SUMMARY_FOR_CHANNEL_COMMAND_PREFIX = SUMMARY_COMMAND_PREFIX + ":";
     private final DiscordConfig config;
 
     public boolean isCommand(MessageReceivedEvent event) {
@@ -30,7 +31,12 @@ public class CommandsUtils {
         if (config.getAdmins().contains(event.getAuthor().getId())) {
             String message = event.getMessage().getContentDisplay();
             if (StringUtils.startsWith(message, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX)) {
-                return StringUtils.substring(message, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX.length());
+                String channel = StringUtils.substring(message, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX.length());
+                return channel;
+            } else if (StringUtils.startsWith(message, SUMMARY_COMMAND_PREFIX)) {
+                if(StringUtils.isBlank(StringUtils.substring(message, SUMMARY_COMMAND_PREFIX.length()))) {
+                    return event.getChannel().getName();
+                }
             }
         }
         return null;
