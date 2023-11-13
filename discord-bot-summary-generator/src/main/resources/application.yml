@@ -1,5 +1,9 @@
 server:
   port: 17000
 
+discord-config:
+  admins: 515872623696019456,831407876575592490
+
 server-config:
   recorderUri: http://localhost:17008/record/channel/{channel}
+  summaryGeneratorUri: http://localhost:17009/summary/channel/{channel}

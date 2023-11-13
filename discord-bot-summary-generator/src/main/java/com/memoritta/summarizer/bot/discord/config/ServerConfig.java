@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @ConfigurationProperties(prefix = "server-config")
 public class ServerConfig {
     String recorderUri;
+    String summaryGeneratorUri;
 }
 
 

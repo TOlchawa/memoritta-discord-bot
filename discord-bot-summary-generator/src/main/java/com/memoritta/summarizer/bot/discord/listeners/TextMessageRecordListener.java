@@ -1,6 +1,7 @@
 package com.memoritta.summarizer.bot.discord.listeners;
 
 import com.memoritta.summarizer.bot.discord.client.TextMessageRecorderClient;
+import com.memoritta.summarizer.bot.discord.utils.CommandsUtils;
 import com.memoritta.summarizer.domain.Discussion;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,15 @@ import static java.time.ZoneOffset.UTC;
 public class TextMessageRecordListener extends ListenerAdapter {
 
     private final TextMessageRecorderClient textMessageRecorderClient;
+    private final CommandsUtils commandsUtils;
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) {
+            return;
+        }
+
+        if (commandsUtils.isCommand(event)) {
             return;
         }
 
