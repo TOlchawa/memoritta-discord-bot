@@ -1,7 +1,0 @@
-com\memoritta\summarizer\discussion\collector\client\SummaryGenerator.class
-com\memoritta\summarizer\discussion\collector\config\Config.class
-com\memoritta\summarizer\discussion\collector\db\DiscussionsRepository.class
-com\memoritta\summarizer\discussion\collector\domain\Discussion.class
-com\memoritta\summarizer\discussion\collector\controller\CreateSummaryController.class
-com\memoritta\summarizer\discussion\collector\domain\Discussion$User.class
-com\memoritta\summarizer\discussion\collector\Application.class
