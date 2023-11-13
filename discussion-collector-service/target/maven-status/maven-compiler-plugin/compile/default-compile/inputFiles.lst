@@ -1,0 +1,6 @@
+C:\dv\memoritta-discord-bot\discussion-collector-service\src\main\java\com\memoritta\summarizer\discussion\collector\Application.java
+C:\dv\memoritta-discord-bot\discussion-collector-service\src\main\java\com\memoritta\summarizer\discussion\collector\domain\Discussion.java
+C:\dv\memoritta-discord-bot\discussion-collector-service\src\main\java\com\memoritta\summarizer\discussion\collector\controller\CreateSummaryController.java
+C:\dv\memoritta-discord-bot\discussion-collector-service\src\main\java\com\memoritta\summarizer\discussion\collector\db\DiscussionsRepository.java
+C:\dv\memoritta-discord-bot\discussion-collector-service\src\main\java\com\memoritta\summarizer\discussion\collector\config\Config.java
+C:\dv\memoritta-discord-bot\discussion-collector-service\src\main\java\com\memoritta\summarizer\discussion\collector\client\SummaryGenerator.java

@@ -1,0 +1,4 @@
+com\memoritta\summarizer\bot\Application.class
+com\memoritta\summarizer\bot\discord\client\listeners\MessageListener.class
+com\memoritta\summarizer\bot\discord\client\DiscordBotClient.class
+com\memoritta\summarizer\bot\discord\controller\DiscordBotController.class
