@@ -6,6 +6,7 @@ import com.memoritta.summarizer.domain.Discussion;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -14,17 +15,29 @@ import java.time.Instant;
 
 import static java.time.ZoneOffset.UTC;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 @Slf4j
 @Service
 @AllArgsConstructor
 public class TextMessageRecordListener extends ListenerAdapter {
 
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
     private final TextMessageRecorderClient textMessageRecorderClient;
     private final CommandsUtils commandsUtils;
 
+
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onMessageUpdate(MessageUpdateEvent event) {
         if (event.getAuthor().isBot()) {
+            return;
+        }
+
+        if (commandsUtils.isUnknownServer(event)) {
+            log.error("Unknown server for event: from: {}, channel: {}", event.getAuthor(), event.getChannel());
             return;
         }
 
@@ -32,14 +45,57 @@ public class TextMessageRecordListener extends ListenerAdapter {
             return;
         }
 
+        readMessage(event);
+    }
+    
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
+        if (commandsUtils.isUnknownServer(event)) {
+            log.error("Unknown server for event: from: {}, channel: {}", event.getAuthor(), event.getChannel());
+            return;
+        }
+
+        if (commandsUtils.isCommand(event)) {
+            return;
+        }
+
+        readMessage(event);
+
+    }
+
+    private void readMessage(MessageUpdateEvent event) {
         String message = event.getMessage().getContentDisplay();
-        String channel = event.getChannel().getName();
+        String channelId = event.getChannel().getId();
+        String channelName = event.getChannel().getName();
+        String server = event.getGuild().getId();
         String userName = event.getAuthor().getGlobalName();
         String userId = event.getAuthor().getId();
         log.info("Message from {} body.len: {}", userId, StringUtils.length(message));
 
+        processMessage(message, channelId, channelName, server, userName, userId);
+    }
+
+    private void readMessage(MessageReceivedEvent event) {
+        String message = event.getMessage().getContentDisplay();
+        String channelId = event.getChannel().getId();
+        String channelName = event.getChannel().getName();
+        String server = event.getGuild().getId();
+        String userName = event.getAuthor().getGlobalName();
+        String userId = event.getAuthor().getId();
+        log.info("Message from {} body.len: {}", userId, StringUtils.length(message));
+
+        processMessage(message, channelId, channelName, server, userName, userId);
+    }
+
+    private void processMessage(String message, String channelId, String channelName, String server, String userName, String userId) {
         Discussion discussion = new Discussion();
-        discussion.setChannel(channel);
+        discussion.setServer(server);
+        discussion.setChannelId(channelId);
+        discussion.setChannelName(channelName);
         Discussion.User author = new Discussion.User();
         author.setId(userId);
         author.setName(userName);
@@ -48,6 +104,5 @@ public class TextMessageRecordListener extends ListenerAdapter {
         discussion.setDatetime(Instant.now().atZone(UTC).toLocalDateTime());
 
         textMessageRecorderClient.record(discussion);
-
     }
 }

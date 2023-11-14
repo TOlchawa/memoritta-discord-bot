@@ -19,8 +19,15 @@ public class Discussion {
     @Field("text")
     private String text;
 
-    @Field("channel")
-    private String channel;
+    @Field("channelName")
+    private String channelName;
+
+    @Field("channelId")
+    private String channelId;
+
+
+    @Field("server")
+    private String server;
 
     @Field("datetime")
     private LocalDateTime datetime;

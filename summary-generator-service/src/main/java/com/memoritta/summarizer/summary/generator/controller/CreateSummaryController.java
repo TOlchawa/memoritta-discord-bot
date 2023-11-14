@@ -14,10 +14,10 @@ public class CreateSummaryController {
 
     private final SummaryGenerator summaryGenerator;
 
-    @GetMapping("/summary/channel/{channel}")
-    public String summary(@PathVariable String channel) {
-        log.info("channel: {}", channel);
-        return summaryGenerator.generateSummaryForChannel(channel);
+    @GetMapping("/summary/server/{server}/channel/{channel}")
+    public String summary(@PathVariable String server, @PathVariable String channel) {
+        log.info("server: {}; channel: {}", server, channel);
+        return summaryGenerator.generateSummaryForChannel(server, channel);
     }
 
 }

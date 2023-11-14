@@ -17,10 +17,10 @@ public class SummaryGeneratorClient {
     private final ServerConfig serverConfig;
     private final WebClientConfiguration webClientConfiguration;
 
-    public Mono<String> generateSummary(String channel) {
-        log.info("channel: {}", channel);
+    public Mono<String> generateSummary(String server, String channel) {
+        log.info("server: {}; channel: {}", server, channel);
         return webClientConfiguration.webClient().get()
-                .uri(serverConfig.getSummaryGeneratorUri(), channel)
+                .uri(serverConfig.getSummaryGeneratorUri(), server, channel)
                 .retrieve()
                 .bodyToMono(String.class);
 

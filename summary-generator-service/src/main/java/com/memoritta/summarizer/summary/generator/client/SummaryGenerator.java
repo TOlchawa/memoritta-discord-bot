@@ -16,8 +16,8 @@ public class SummaryGenerator {
     private final ChatClient chatClient;
 
 
-    public String generateSummaryForChannel(String channel) {
-        List<Discussion> context = discussionsProvider.getDiscussionsForChannel(channel);
+    public String generateSummaryForChannel(String server, String channel) {
+        List<Discussion> context = discussionsProvider.getDiscussionsForChannel(server, channel);
         String response = chatClient.askQuestion(context, ChatClient.DEFAULT_QUESTION);
         log.info("result: {}", response);
         return response;

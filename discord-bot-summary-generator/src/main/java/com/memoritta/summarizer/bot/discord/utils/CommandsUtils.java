@@ -3,7 +3,9 @@ package com.memoritta.summarizer.bot.discord.utils;
 import com.memoritta.summarizer.bot.discord.config.DiscordConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,29 +19,46 @@ public class CommandsUtils {
     private final DiscordConfig config;
 
     public boolean isCommand(MessageReceivedEvent event) {
-        log.info("user id: {}", event.getAuthor().getId());
-        if (config.getAdmins().contains(event.getAuthor().getId())) {
-            String message = event.getMessage().getContentDisplay();
-            if (StringUtils.startsWith(message, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX)) {
+        String userId = event.getAuthor().getId();
+        String message = event.getMessage().getContentDisplay();
+        return isCommand(message, userId);
+    }
+
+    public boolean isCommand(MessageUpdateEvent event) {
+        String userId = event.getAuthor().getId();
+        String message = event.getMessage().getContentDisplay();
+        return isCommand(message, userId);
+    }
+
+    private boolean isCommand(String message, String userId) {
+        log.info("user id: {}", userId);
+        if (config.getAdmins().contains(userId)) {
+            log.info("admin user: {}", userId);
+            if (StringUtils.contains(message, SUMMARY_COMMAND_PREFIX)) {
+                log.info("command: {}", message);
                 return true;
             }
+        } else {
+            log.info("unknown user: {}", userId);
         }
         return false;
     }
 
-    public String getChannel(MessageReceivedEvent event) {
+    public String getChannelName(MessageReceivedEvent event) {
         if (config.getAdmins().contains(event.getAuthor().getId())) {
-            String message = event.getMessage().getContentDisplay();
-            if (StringUtils.startsWith(message, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX)) {
-                String channel = StringUtils.substring(message, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX.length());
-                return channel;
-            } else if (StringUtils.startsWith(message, SUMMARY_COMMAND_PREFIX)) {
-                if(StringUtils.isBlank(StringUtils.substring(message, SUMMARY_COMMAND_PREFIX.length()))) {
-                    return event.getChannel().getName();
-                }
-            }
+            return event.getChannel().getName();
         }
         return null;
     }
 
+    public String getChannelId(MessageReceivedEvent event) {
+        if (config.getAdmins().contains(event.getAuthor().getId())) {
+            return event.getChannel().getId();
+        }
+        return null;
+    }
+
+    public boolean isUnknownServer(GenericMessageEvent event) {
+        return !event.isFromGuild() || event.getGuild() == null || event.getGuild().getId() == null;
+    }
 }
