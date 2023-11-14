@@ -15,10 +15,10 @@ import java.util.List;
 public class DiscussionsProvider {
     private final MongoTemplate mongoTemplate;
 
-    public List<Discussion> getDiscussionsForChannel(String server, String channel) {
+    public List<Discussion> getDiscussionsForChannel(String server, String channelId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("server").is(server));
-        query.addCriteria(Criteria.where("channel").is(channel));
+        query.addCriteria(Criteria.where("channelId").is(channelId));
         query.fields().include("_id", "datetime", "user.id", "text");
 
         return mongoTemplate.find(query, Discussion.class)

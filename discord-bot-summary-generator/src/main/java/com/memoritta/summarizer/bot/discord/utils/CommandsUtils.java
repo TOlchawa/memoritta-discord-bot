@@ -3,10 +3,12 @@ package com.memoritta.summarizer.bot.discord.utils;
 import com.memoritta.summarizer.bot.discord.config.DiscordConfig;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -45,8 +47,20 @@ public class CommandsUtils {
     }
 
     public String getChannelName(MessageReceivedEvent event) {
-        if (config.getAdmins().contains(event.getAuthor().getId())) {
-            return event.getChannel().getName();
+        String authorId = event.getAuthor().getId();
+        String contentDisplay = event.getMessage().getContentDisplay();
+        String channelName = event.getChannel().getName();
+        return extractChannelName(authorId, contentDisplay, channelName);
+    }
+
+    @Nullable
+    private String extractChannelName(String authorId, String contentDisplay, String channelName) {
+        if (config.getAdmins().contains(authorId)) {
+            if (StringUtils.contains(contentDisplay, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX)) {
+                return StringUtils.substringAfter(contentDisplay, SUMMARY_FOR_CHANNEL_COMMAND_PREFIX);
+            } else {
+                return channelName;
+            }
         }
         return null;
     }
