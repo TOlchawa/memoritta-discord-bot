@@ -7,19 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.RestAction;
-import net.dv8tion.jda.internal.requests.CompletedRestAction;
-import net.dv8tion.jda.internal.requests.RestActionImpl;
-import net.dv8tion.jda.internal.requests.restaction.operator.CombineRestAction;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
 
 import static java.time.Duration.ofSeconds;
 
@@ -36,6 +27,14 @@ public class SummaryGeneratorListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        try {
+            processCommand(event);
+        } catch (Throwable t) {
+            log.error("Error: {}", t.getMessage(), t);
+        }
+    }
+
+    private void processCommand(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) {
             return;
         }
@@ -66,7 +65,6 @@ public class SummaryGeneratorListener extends ListenerAdapter {
         CompletableFuture<?> future = restAction.submit();
         future.thenRun(task);
         restAction.timeout(300, TimeUnit.SECONDS).queue();
-
     }
 
 }

@@ -32,6 +32,23 @@ public class TextMessageRecordListener extends ListenerAdapter {
 
     @Override
     public void onMessageUpdate(MessageUpdateEvent event) {
+        try {
+            processUpdate(event);
+        } catch (Throwable t) {
+            log.error("Error: {}", t.getMessage(), t);
+        }
+    }
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        try {
+            processMessage(event);
+        } catch (Throwable t) {
+            log.error("Error: {}", t.getMessage(), t);
+        }
+    }
+
+    private void processUpdate(MessageUpdateEvent event) {
         if (event.getAuthor().isBot()) {
             return;
         }
@@ -47,9 +64,8 @@ public class TextMessageRecordListener extends ListenerAdapter {
 
         readMessage(event);
     }
-    
-    @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
+
+    private void processMessage(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) {
             return;
         }
@@ -64,7 +80,6 @@ public class TextMessageRecordListener extends ListenerAdapter {
         }
 
         readMessage(event);
-
     }
 
     private void readMessage(MessageUpdateEvent event) {
