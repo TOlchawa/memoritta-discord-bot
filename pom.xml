@@ -28,6 +28,7 @@
         <module>discord-bot-summary-generator</module>
         <module>summary-generator-service</module>
         <module>discussion-collector-service</module>
+        <module>configuration-manager-service</module>
     </modules>
 
     <dependencies>

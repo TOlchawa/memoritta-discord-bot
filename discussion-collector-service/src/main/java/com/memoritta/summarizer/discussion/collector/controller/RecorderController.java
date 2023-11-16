@@ -14,6 +14,11 @@ public class RecorderController {
 
     private final DiscussionsRepository discussionsRepository;
 
+    @GetMapping("/record")
+    public String record() {
+        return "ok";
+    }
+
     @PostMapping("/record")
     public String record(@RequestBody Discussion discussion) {
         log.info("channelId: {} ; channelName: {}", discussion.getChannelId(), discussion.getChannelName());

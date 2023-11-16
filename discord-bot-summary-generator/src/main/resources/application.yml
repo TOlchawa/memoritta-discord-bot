@@ -8,3 +8,6 @@ server-config:
   recorderUri: http://localhost:17008/record
   resetUri: http://localhost:17008/reset/server/{server}/channel/{channel}
   summaryGeneratorUri: http://localhost:17009/summary/server/{server}/channel/{channel}
+  configurationSaveUri: http://localhost:17006/config/save
+  loadAllConfigurationSaveUri: http://localhost:17006/config/load/all
+  loadConfigurationSaveUri: http://localhost:17006/config/load/server/{server}/channel/{channel}

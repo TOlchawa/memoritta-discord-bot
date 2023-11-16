@@ -17,6 +17,9 @@ public class ServerConfig {
     String recorderUri;
     String resetUri;
     String summaryGeneratorUri;
+    String configurationSaveUri;
+    String loadAllConfigurationSaveUri;
+    String loadConfigurationSaveUri;
 }
 
 

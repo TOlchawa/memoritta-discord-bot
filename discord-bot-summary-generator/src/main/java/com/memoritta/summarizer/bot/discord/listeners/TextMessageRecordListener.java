@@ -17,7 +17,6 @@ import static java.time.ZoneOffset.UTC;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -53,12 +52,12 @@ public class TextMessageRecordListener extends ListenerAdapter {
             return;
         }
 
-        if (commandsUtils.isUnknownServer(event)) {
+        if (commandsUtils.unknownServerDetected(event)) {
             log.error("Unknown server for event: from: {}, channel: {}", event.getAuthor(), event.getChannel());
             return;
         }
 
-        if (commandsUtils.isCommand(event)) {
+        if (commandsUtils.commandDetected(event)) {
             return;
         }
 
@@ -70,12 +69,12 @@ public class TextMessageRecordListener extends ListenerAdapter {
             return;
         }
 
-        if (commandsUtils.isUnknownServer(event)) {
+        if (commandsUtils.unknownServerDetected(event)) {
             log.error("Unknown server for event: from: {}, channel: {}", event.getAuthor(), event.getChannel());
             return;
         }
 
-        if (commandsUtils.isCommand(event)) {
+        if (commandsUtils.commandDetected(event)) {
             return;
         }
 

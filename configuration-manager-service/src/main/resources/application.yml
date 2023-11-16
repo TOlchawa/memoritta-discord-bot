@@ -1,0 +1,7 @@
+server:
+  port: 17006
+  data:
+    mongodb:
+      database: configuration
+      host: localhost
+      port: 27017
