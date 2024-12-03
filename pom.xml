@@ -19,8 +19,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <langchain4j-spring-boot-starter.version>0.17.0</langchain4j-spring-boot-starter.version>
-        <commons-io.version>2.14.0</commons-io.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
+        <commons-io.version>2.16.1</commons-io.version>
     </properties>
 
     <modules>
@@ -118,6 +118,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
         <dependency>
